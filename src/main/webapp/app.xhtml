@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+>
+
+<h:head>
+
+
+</h:head>
+
+<h:body>
+    <h:form>
+        <p:panel id="horizontal" header="Cadastrar Tarefa" toggleable="true" toggleOrientation="horizontal">
+            <h:panelGrid columns="2" cellpadding="10">
+                <h:outputLabel value="Titulo"></h:outputLabel>
+                <h:inputText value="#{appController.task.titulo}"></h:inputText>
+
+                <h:outputLabel value="Descrição"></h:outputLabel>
+                <h:inputText value="#{appController.task.descricao}"></h:inputText>
+            </h:panelGrid>
+
+            <h:panelGrid columns="2" cellpadding="10">
+                <h:outputLabel value="Responsável"></h:outputLabel>
+                <h:selectOneMenu value="#{appController.task.responsavel}">
+                    <f:selectItems value="#{appController.responsaveis}"/>
+                </h:selectOneMenu>
+
+                <h:outputLabel value="Prioridade"></h:outputLabel>
+                <h:selectOneMenu value="#{appController.task.prioridade}">
+                    <f:selectItems value="#{appController.prioridades}"/>
+                </h:selectOneMenu>
+            </h:panelGrid>
+
+            <h:panelGrid columns="2" cellpadding="10">
+                <h:outputLabel value="Deadline"></h:outputLabel>
+                <h:inputText value="#{appController.task.deadLine}"></h:inputText>
+<!--                <h:inputText value="">-->
+<!--                    <f:convertDateTime pattern="dd-MM-yyyy"/>-->
+<!--                </h:inputText>-->
+            </h:panelGrid>
+            <h:commandButton type="submit" value="Cadastrar" action="#{appController.cadastrar}" />
+
+
+        </p:panel>
+    </h:form>
+    <p:panel id="Lista" header="Listagem de Tarefa" toggleable="true" toggleOrientation="horizontal">
+        <h:panelGrid columns="2" cellpadding="10">
+
+            <h:outputLabel value="Numero"></h:outputLabel>
+            <h:inputText value=""></h:inputText>
+
+            <h:outputLabel value="Titulo/Descrição"></h:outputLabel>
+            <h:inputTextarea value=""></h:inputTextarea>
+
+
+        </h:panelGrid>
+
+        <h:panelGrid columns="5" cellpadding="10">
+            <h:outputLabel value="Responsável"></h:outputLabel>
+            <h:selectOneMenu value="#{appController.task.responsavel}">
+                <f:selectItems value="#{appController.responsaveis}"/>
+            </h:selectOneMenu>
+            <h:outputLabel value="Situação"></h:outputLabel>
+            <h:selectOneMenu value="#{appController.task.situacao}">
+                <f:selectItems value="#{appController.situacoes}"/>
+            </h:selectOneMenu>
+            <h:commandButton type="submit" value="Buscar Tarefas">
+            </h:commandButton>
+
+        </h:panelGrid>
+
+        <h:dataTable value="#{appController.taskBeanList}" var = "tarefa"
+                     styleClass = "TarefasTable"
+                     headerClass = "TarefasTableHeader"
+                     rowClasses = "TarefasTableOddRow,TarefasTableEvenRow">
+
+            <h:column>
+                <f:facet name = "header">Numero</f:facet>
+                #{tarefa.id}
+            </h:column>
+
+            <h:column>
+                <f:facet name = "header">Titulo</f:facet>
+                #{tarefa.titulo}
+            </h:column>
+
+            <h:column>
+                <f:facet name = "header">Responsaveis</f:facet>
+                #{tarefa.responsavel}
+            </h:column>
+
+            <h:column>
+                <f:facet name = "header">Ações</f:facet>
+                <h:commandLink id = "Link1" value = "Editar" action = "#{appController.editar(tarefa)}">
+
+                </h:commandLink>
+                <h:commandLink id = "Link2" value = "Excluir" action = "#{appController.excluir}">
+
+                </h:commandLink>
+                <h:commandLink id = "Link3" value = "Concluir" action = "#{appController.concluir}">
+
+                </h:commandLink>
+            </h:column>
+        </h:dataTable>
+    </p:panel>
+
+</h:body>
+</html>
